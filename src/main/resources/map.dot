@@ -1,0 +1,15 @@
+digraph map {
+    forest [label="Forest", desc=""]
+    clearing [label="The Clearing", desc=""]
+    pond [label="The Pond", desc=""]
+    road [label="The King's Road", desc=""]
+
+    forest -> pond [label="The path south", aliases="south,s"]
+    pond -> forest [label="The path north", aliases="north,n"]
+
+    forest -> clearing [label="The path north", aliases="north,n"]
+    clearing -> forest [label="The path south", aliases="south,s"]
+
+    forest -> road [label="The path east", aliases="east,e"]
+    road -> forest [label="The path west", aliases="west,w"]
+}

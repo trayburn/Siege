@@ -31,4 +31,8 @@ public class Location extends Container {
         this.enemy = enemy;
         if (enemy != null) enemy.setLocation(this);
     }
+
+    public boolean matchesNameOrAlias(String name) {
+        return this.getName().equalsIgnoreCase(name);
+    }
 }

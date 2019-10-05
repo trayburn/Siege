@@ -27,4 +27,9 @@ public class Exit {
     public List<String> getAliases() {
         return aliases;
     }
+
+    public boolean matchesNameOrAlias(String name) {
+        return this.getName().equalsIgnoreCase(name) ||
+                this.getAliases().stream().anyMatch(name::equalsIgnoreCase);
+    }
 }
