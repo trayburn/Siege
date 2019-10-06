@@ -30,7 +30,21 @@ public abstract class Container extends Item {
         return items;
     }
 
-    public <T extends Item> T findByClass(Class<T> clazz, String name) throws ItemNotFoundGameException {
+    public <T extends Item> T findById(Class<T> clazz, String id) throws ItemNotFoundGameException {
+        return findAll(clazz)
+                .filter(e -> e.getId().equalsIgnoreCase(id))
+                .findFirst()
+                .orElseThrow(ItemNotFoundGameException::new);
+    }
+
+    public Item findById(String id) throws ItemNotFoundGameException {
+        return findAll()
+                .filter(e -> e.getId().equalsIgnoreCase(id))
+                .findFirst()
+                .orElseThrow(ItemNotFoundGameException::new);
+    }
+
+    public <T extends Item> T find(Class<T> clazz, String name) throws ItemNotFoundGameException {
         return findAll(clazz)
                 .filter(e -> e.matchesNameOrAlias(name))
                 .findFirst()

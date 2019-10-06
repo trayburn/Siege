@@ -33,6 +33,6 @@ public class InventoryCommand extends AliasedCommand {
 
     @Override
     public String getHelpText() {
-        return "Displays all items you are carrying.";
+        return "Displays all items.txt you are carrying.";
     }
 }

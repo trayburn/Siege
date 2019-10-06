@@ -12,6 +12,7 @@ public class Location extends Container {
         super(name, strength, dexterity, constitution, aliases);
     }
 
+
     public Stream<Exit> getExits() {
         return findAll(Exit.class);
     }

@@ -16,8 +16,8 @@ public abstract class Character extends Container implements StatisticModifier {
     private int hitPoints;
     private int maxHitPoints;
 
-    public Character(String name, int strength, int dexterity, int constitution) {
-        super(name, strength, dexterity, constitution);
+    public Character(String name, int strength, int dexterity, int constitution, String... aliases) {
+        super(name, strength, dexterity, constitution, aliases);
         this.name = name;
         initSecondaryStatistics();
     }

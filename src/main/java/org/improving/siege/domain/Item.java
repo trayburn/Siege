@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Item implements StatisticModifier {
+    protected String id;
     protected String name;
     protected int strength;
     protected int dexterity;
@@ -20,6 +21,14 @@ public class Item implements StatisticModifier {
         this.strength = strength;
         this.constitution = constitution;
         this.dexterity = dexterity;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
