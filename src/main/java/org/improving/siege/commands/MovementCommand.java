@@ -1,6 +1,7 @@
 package org.improving.siege.commands;
 
 import org.improving.siege.GameContext;
+import org.improving.siege.domain.Enemy;
 import org.improving.siege.exceptions.GameException;
 import org.improving.siege.io.InputOutput;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,10 @@ public class MovementCommand extends AliasedCommand{
 
     @Override
     public Stream<String> getAliases() {
-        var nameStream = context.getPlayer().getLocation().getExits().stream().map(e -> e.getName());
-        var aliasStream = context.getPlayer().getLocation().getExits().stream().map(e -> e.getAliases()).flatMap(List::stream);
+        var nameStream = context.getPlayer().getLocation().getExits()
+                .map(e -> e.getName());
+        var aliasStream = context.getPlayer().getLocation().getExits()
+                .map(e -> e.getAliases()).flatMap(List::stream);
         return Stream.of(nameStream, aliasStream).flatMap(e -> e);
     }
 
@@ -34,12 +37,12 @@ public class MovementCommand extends AliasedCommand{
     @Override
     public void execute(String input) throws GameException {
         var location = context.getPlayer().getLocation();
-        if (location.getEnemy() != null) {
-            io.displayText("You must first defeat " + location.getEnemy().getName() + ".");
+        if (location.findAll(Enemy.class).count() > 0) {
+            io.displayText("You must first defeat all enemies.");
             return;
         }
-        var destination = location.getExits().stream()
-                .filter(e -> input.equalsIgnoreCase(e.getName()) || e.getAliases().stream().anyMatch(input::equalsIgnoreCase))
+        var destination = location.getExits()
+                .filter(e -> e.matchesNameOrAlias(input))
                 .findFirst()
                 .orElseThrow()
                 .getDestination();

@@ -9,9 +9,6 @@ import java.util.List;
 
 public abstract class Character extends Container implements StatisticModifier {
     private final String name;
-    private final int strength;
-    private final int constitution;
-    private final int dexterity;
     private Location location;
     private List<Item> equipment = new ArrayList<>();
 
@@ -20,9 +17,7 @@ public abstract class Character extends Container implements StatisticModifier {
     private int maxHitPoints;
 
     public Character(String name, int strength, int dexterity, int constitution) {
-        this.dexterity = dexterity;
-        this.constitution = constitution;
-        this.strength = strength;
+        super(name, strength, dexterity, constitution);
         this.name = name;
         initSecondaryStatistics();
     }
@@ -31,6 +26,7 @@ public abstract class Character extends Container implements StatisticModifier {
         this.hitPoints = this.getConstitution() * 10;
         this.maxHitPoints = this.hitPoints;
     }
+
     private void recalculateSecondaryStatistics() {
         this.maxHitPoints = this.getConstitution() * 10;
     }
@@ -43,9 +39,9 @@ public abstract class Character extends Container implements StatisticModifier {
     public int getStrength() {
         return strength +
                 equipment.stream()
-                .filter(e -> e instanceof StatisticModifier)
-                .mapToInt(e -> ((StatisticModifier) e).getStrength())
-                .sum();
+                        .filter(e -> e instanceof StatisticModifier)
+                        .mapToInt(e -> ((StatisticModifier) e).getStrength())
+                        .sum();
     }
 
     @Override
@@ -86,7 +82,9 @@ public abstract class Character extends Container implements StatisticModifier {
         this.location = location;
     }
 
-    public Iterable<Item> getEquipment() { return equipment; }
+    public Iterable<Item> getEquipment() {
+        return equipment;
+    }
 
     public void equip(Item item) throws NotCarriedGameException {
         if (this.getItems().contains(item) == false)

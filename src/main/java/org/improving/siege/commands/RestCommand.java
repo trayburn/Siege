@@ -1,6 +1,7 @@
 package org.improving.siege.commands;
 
 import org.improving.siege.GameContext;
+import org.improving.siege.domain.Enemy;
 import org.improving.siege.exceptions.GameException;
 import org.improving.siege.io.InputOutput;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class RestCommand extends AliasedCommand {
     public void execute(String input) throws GameException {
         var p = context.getPlayer();
 
-        if (p.getLocation().getEnemy() != null) {
+        if (p.getLocation().findAll(Enemy.class).count() > 0) {
             io.displayAlert("You cannot rest here.");
             return;
         }

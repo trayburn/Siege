@@ -1,6 +1,9 @@
 package org.improving.siege.commands;
 
 import org.improving.siege.GameContext;
+import org.improving.siege.domain.Enemy;
+import org.improving.siege.domain.Exit;
+import org.improving.siege.domain.WorldItem;
 import org.improving.siege.exceptions.GameException;
 import org.improving.siege.io.InputOutput;
 import org.springframework.stereotype.Component;
@@ -27,15 +30,12 @@ public class LookCommand extends AliasedCommand {
     public void execute(String input)  throws GameException {
         var l = context.getPlayer().getLocation();
         io.displayText(l.getName());
-        if (l.getEnemy() != null) {
-            io.displayAlert(l.getEnemy().getName() + " blocks your way.");
+        if (l.findAll(Enemy.class).count() > 0) {
+            io.displayAlert("Enemies block your way.");
         }
-        for (var item : l.getItems()) {
-            io.displayAlert(item.toString());
-        }
-        for (var e : l.getExits()) {
-
-            io.displayIndent(e.getName());
-        }
+        l.findAll(WorldItem.class)
+                .forEach(e -> io.displayAlert(e.toString()));
+        l.findAll(Exit.class)
+                .forEach(e -> io.displayIndent(e.getName()));
     }
 }

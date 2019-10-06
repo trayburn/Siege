@@ -1,38 +1,22 @@
 package org.improving.siege.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
 public class Location extends Container {
-    private final String name;
-    private final List<Exit> exits;
-    private Enemy enemy;
 
-    public Location(String name, Item... items) {
-        super(items);
-        this.name = name;
-        this.exits = new ArrayList<>();
-        this.enemy = null;
+    public Location(String name, String... aliases) {
+        super(name, aliases);
     }
 
-    public String getName() {
-        return name;
+    public Location(String name, int strength, int dexterity, int constitution, String... aliases) {
+        super(name, strength, dexterity, constitution, aliases);
     }
 
-    public List<Exit> getExits() {
-        return exits;
+    public Stream<Exit> getExits() {
+        return findAll(Exit.class);
     }
 
     public Enemy getEnemy() {
-        return enemy;
-    }
-
-    public void setEnemy(Enemy enemy) {
-        this.enemy = enemy;
-        if (enemy != null) enemy.setLocation(this);
-    }
-
-    public boolean matchesNameOrAlias(String name) {
-        return this.getName().equalsIgnoreCase(name);
+        return findAll(Enemy.class).findFirst().orElse(null);
     }
 }

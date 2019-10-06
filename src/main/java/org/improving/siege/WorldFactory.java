@@ -31,21 +31,20 @@ public class WorldFactory {
             GraphParser parser = new GraphParser(new FileInputStream(absolutePath));
             createLocations(parser.getNodes());
             createExits(parser.getEdges());
-            Map<String, GraphEdge> edges = parser.getEdges();
         } catch (URISyntaxException | FileNotFoundException e) {
             e.printStackTrace();
         }
 
         var forest = find("Forest");
         var pond = find("The Pond");
-        forest.getItems().add(new StatisticItem(
+        forest.getItems().add(new Item(
                 "A golden ring",
                 0, 1, 0,
                 "golden", "ring"));
 
         var lady = new Enemy("The Lady of the Lake", 2, 5, 10);
         lady.getItems().add(new Item("Excalibur"));
-        pond.setEnemy(lady);
+        pond.getItems().add(lady);
 
         return forest;
     }
@@ -57,7 +56,7 @@ public class WorldFactory {
             var to = find(edge.getNode2().getAttribute("label").toString());
             var aliases = edge.getAttribute("aliases").toString().split(",");
             var exit = new Exit(edge.getAttribute("label").toString(), to, aliases);
-            from.getExits().add(exit);
+            from.getItems().add(exit);
         }
     }
 

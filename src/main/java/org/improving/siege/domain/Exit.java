@@ -1,35 +1,14 @@
 package org.improving.siege.domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class Exit {
-    private String name;
+public class Exit extends Item {
     private Location destination;
-    private List<String> aliases;
 
     public Exit(String name, Location destination, String... aliases) {
-        this.name = name;
+        super(name, aliases);
         this.destination = destination;
-        this.aliases = new ArrayList<>();
-        this.aliases.addAll(Arrays.asList(aliases));
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Location getDestination() {
         return destination;
-    }
-
-    public List<String> getAliases() {
-        return aliases;
-    }
-
-    public boolean matchesNameOrAlias(String name) {
-        return this.getName().equalsIgnoreCase(name) ||
-                this.getAliases().stream().anyMatch(name::equalsIgnoreCase);
     }
 }

@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Siege">
+    <output-path>$PROJECT_DIR$/out/siege</output-path>
+    <root id="archive" name="Siege.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="siege" />
+      <element id="library" level="project" name="Maven: com.diogonunes:JCDP:2.0.3.1" />
+      <element id="library" level="project" name="Maven: com.paypal.digraph:digraph-parser:1.0" />
+      <element id="library" level="project" name="Maven: org.abego.treelayout:org.abego.treelayout.core:1.0.1" />
+      <element id="library" level="project" name="Maven: org.antlr:antlr4-annotations:4.2" />
+      <element id="library" level="project" name="Maven: org.antlr:antlr4-runtime:4.2" />
+      <element id="library" level="project" name="Maven: org.fusesource.jansi:jansi:1.15" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-context:5.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-core:5.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.1.9.RELEASE" />
+    </root>
+  </artifact>
+</component>

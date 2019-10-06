@@ -58,7 +58,7 @@ public class AttackCommand extends AliasedCommand {
                 io.displayText("You hit " + enemy.getName() + "! (" + enemy.getHitPoints() + "/" + enemy.getMaxHitPoints() + ")");
             } else {
                 io.displayText("You have slain " + enemy.getName());
-                context.getPlayer().getLocation().setEnemy(null);
+                context.getPlayer().getLocation().getItems().remove(enemy);
                 if (enemy.getItems().size() > 0) {
                     io.displayAlert("You loot:");
                     enemy.getItems().stream().forEach(e -> io.displayAlert(e.getName()));
