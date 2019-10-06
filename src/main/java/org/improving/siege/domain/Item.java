@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Item implements StatisticModifier {
+public abstract class Item implements StatisticModifier {
     protected String id;
     protected String name;
     protected int strength;

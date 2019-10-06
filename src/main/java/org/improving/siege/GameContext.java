@@ -1,25 +1,39 @@
 package org.improving.siege;
 
+import org.improving.siege.domain.EquippableWorldItem;
 import org.improving.siege.domain.Location;
 import org.improving.siege.domain.Player;
+import org.improving.siege.exceptions.GameException;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GameContext {
-    private final Player player;
-    private final Location startingLocation;
+    private Player player;
+    private Location masterLocation;
 
     public GameContext(WorldFactory factory) {
+        this.masterLocation = factory.buildMasterLocation();
+        initPlayer();
+    }
+
+    private Player initPlayer() {
         this.player = new Player("The Player", 5,5,5);
-        this.startingLocation = factory.getStartingLocation();
-        this.player.setLocation(this.startingLocation);
+        var sword = new EquippableWorldItem("Sword",1,0,0);
+        var shield = new EquippableWorldItem("Shield",0,0,1);
+        player.getItems().add(sword);
+        player.getItems().add(shield);
+        try {
+            player.equip(sword);
+            var forest = this.masterLocation.findById(Location.class, "forest");
+            this.player.setLocation(forest);
+        } catch (GameException ex) {
+            // This simply can't really happen.
+            ex.printStackTrace();
+        }
+        return player;
     }
 
     public Player getPlayer() {
         return player;
-    }
-
-    public Location getStartingLocation() {
-        return startingLocation;
     }
 }

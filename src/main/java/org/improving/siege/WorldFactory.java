@@ -20,7 +20,7 @@ public class WorldFactory {
     private Location startingLocation = null;
     private Location master = new Location("Master Room");
 
-    public Location getStartingLocation() {
+    public Location buildMasterLocation() {
         if (startingLocation != null) return startingLocation;
 
         loadLocations();
@@ -28,13 +28,7 @@ public class WorldFactory {
         loadEnemies();
         loadLoots();
 
-
-        try {
-            return master.findById(Location.class, "forest");
-        } catch (ItemNotFoundGameException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return master;
     }
 
     private void loadLoots() {
