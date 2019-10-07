@@ -3,6 +3,7 @@ package org.improving.siege.domain;
 import org.improving.siege.exceptions.ItemNotFoundGameException;
 import org.improving.siege.exceptions.NotCarriedGameException;
 import org.improving.siege.exceptions.NotEquippedGameException;
+import org.improving.siege.exceptions.SlotTakenGameException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public abstract class Character extends Container implements StatisticModifier {
     private final String name;
     private Location location;
-    private List<Item> equipment = new ArrayList<>();
+    private List<EquippableWorldItem> equipment = new ArrayList<>();
 
 
     private int hitPoints;
@@ -82,13 +83,16 @@ public abstract class Character extends Container implements StatisticModifier {
         this.location = location;
     }
 
-    public Iterable<Item> getEquipment() {
+    public Iterable<EquippableWorldItem> getEquipment() {
         return equipment;
     }
 
-    public void equip(Item item) throws NotCarriedGameException {
+    public void equip(EquippableWorldItem item) throws NotCarriedGameException, SlotTakenGameException {
         if (this.getItems().contains(item) == false)
             throw new NotCarriedGameException();
+        if (this.equipment.stream().anyMatch(e -> e.getEquipmentType().equalsIgnoreCase(item.getEquipmentType()))) {
+            throw new SlotTakenGameException();
+        }
         equipment.add(item);
         this.getItems().remove(item);
         recalculateSecondaryStatistics();

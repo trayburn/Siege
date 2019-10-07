@@ -31,12 +31,23 @@ public class WorldFactory {
         return master;
     }
 
+    private void createAt(Container container, String name, String type, int str, int dex, int con, String[] aliases, int equip) {
+        WorldItem item = null;
+        if (equip == 0) {
+            item = new WorldItem(name, str, dex, con, aliases);
+        } else {
+            item = new EquippableWorldItem(name, type, str, dex, con, aliases);
+        }
+        container.getItems().add(item);
+        master.getItems().add(item);
+    }
+
     private void loadLoots() {
         try {
             var lines = Files.readAllLines(Path.of(getResource("loots.txt")));
             lines.stream().forEach(l -> {
                 var arr = l.split("\\|");
-                if (arr.length == 7) {
+                if (arr.length == 8) {
                     var locationId = arr[0];
                     var name = arr[1];
                     var str = Integer.parseInt(arr[2]);
@@ -44,13 +55,14 @@ public class WorldFactory {
                     var con = Integer.parseInt(arr[4]);
                     var aliases = arr[5].split(",");
                     var equip = Integer.parseInt(arr[6]);
+                    var type = arr[7];
                     Enemy location = null;
                     try {
                         location = master.find(Enemy.class, locationId);
                     } catch (ItemNotFoundGameException e) {
                         e.printStackTrace();
                     }
-                    createAt(location, name, str, dex, con, aliases, equip);
+                    createAt(location, name, type, str, dex, con, aliases, equip);
                 }
             });
         } catch (URISyntaxException | IOException e) {
@@ -91,7 +103,7 @@ public class WorldFactory {
             var lines = Files.readAllLines(Path.of(getResource("items.txt")));
             lines.stream().forEach(l -> {
                 var arr = l.split("\\|");
-                if (arr.length == 7) {
+                if (arr.length == 8) {
                     var locationId = arr[0];
                     var name = arr[1];
                     var str = Integer.parseInt(arr[2]);
@@ -99,31 +111,20 @@ public class WorldFactory {
                     var con = Integer.parseInt(arr[4]);
                     var aliases = arr[5].split(",");
                     var equip = Integer.parseInt(arr[6]);
+                    var type = arr[7];
                     Location location = null;
                     try {
                         location = master.findById(Location.class, locationId);
                     } catch (ItemNotFoundGameException e) {
                         e.printStackTrace();
                     }
-                    createAt(location, name, str, dex, con, aliases, equip);
+                    createAt(location, name, type, str, dex, con, aliases, equip);
                 }
             });
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
     }
-
-    private void createAt(Container container, String name, int str, int dex, int con, String[] aliases, int equip) {
-        WorldItem item = null;
-        if (equip == 0) {
-            item = new WorldItem(name, str, dex, con, aliases);
-        } else {
-            item = new EquippableWorldItem(name, str, dex, con, aliases);
-        }
-        container.getItems().add(item);
-        master.getItems().add(item);
-    }
-
 
     private void loadLocations() {
         try {
@@ -132,24 +133,6 @@ public class WorldFactory {
             createExits(parser.getEdges());
         } catch (URISyntaxException | FileNotFoundException e) {
             e.printStackTrace();
-        }
-    }
-
-    private String getResource(String resourceName) throws URISyntaxException {
-        URL res = getClass().getClassLoader().getResource(resourceName);
-        File file = Paths.get(res.toURI()).toFile();
-        return file.getAbsolutePath();
-    }
-
-    private void createExits(Map<String, GraphEdge> edges) {
-        for (var key : edges.keySet()) {
-            var edge = edges.get(key);
-            var from = find(edge.getNode1().getAttribute("label").toString());
-            var to = find(edge.getNode2().getAttribute("label").toString());
-            var aliases = edge.getAttribute("aliases").toString().split(",");
-            var exit = new Exit(edge.getAttribute("label").toString(), to, aliases);
-            from.getItems().add(exit);
-            master.getItems().add(exit);
         }
     }
 
@@ -168,4 +151,23 @@ public class WorldFactory {
             master.getItems().add(location);
         }
     }
+
+    private void createExits(Map<String, GraphEdge> edges) {
+        for (var key : edges.keySet()) {
+            var edge = edges.get(key);
+            var from = find(edge.getNode1().getAttribute("label").toString());
+            var to = find(edge.getNode2().getAttribute("label").toString());
+            var aliases = edge.getAttribute("aliases").toString().split(",");
+            var exit = new Exit(edge.getAttribute("label").toString(), to, aliases);
+            from.getItems().add(exit);
+            master.getItems().add(exit);
+        }
+    }
+
+    private String getResource(String resourceName) throws URISyntaxException {
+        URL res = getClass().getClassLoader().getResource(resourceName);
+        File file = Paths.get(res.toURI()).toFile();
+        return file.getAbsolutePath();
+    }
+
 }

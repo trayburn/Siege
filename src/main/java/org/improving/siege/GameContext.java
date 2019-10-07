@@ -18,8 +18,8 @@ public class GameContext {
 
     private Player initPlayer() {
         this.player = new Player("The Player", 5,5,5);
-        var sword = new EquippableWorldItem("Sword",1,0,0);
-        var shield = new EquippableWorldItem("Shield",0,0,1);
+        var sword = new EquippableWorldItem("Sword", "sword", 1,0,0);
+        var shield = new EquippableWorldItem("Shield", "shield",0,0,1);
         player.getItems().add(sword);
         player.getItems().add(shield);
         try {
