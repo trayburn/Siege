@@ -3,6 +3,8 @@ digraph map {
     clearing [label="The Clearing", desc=""]
     pond [label="The Pond", desc=""]
     road [label="The King's Road", desc=""]
+    nroad [label="Northern The King's Road"]
+    sroad [label="Southern The King's Road"]
 
     forest -> pond [label="The path south", aliases="south,s"]
     pond -> forest [label="The path north", aliases="north,n"]
@@ -12,4 +14,10 @@ digraph map {
 
     forest -> road [label="The path east", aliases="east,e"]
     road -> forest [label="The path west", aliases="west,w"]
+
+    road -> sroad [label="The path south", aliases="south,s"]
+    sroad -> road [label="The path north", aliases="north,n"]
+
+    road -> nroad [label="The path north", aliases="north,n"]
+    nroad -> road [label="The path south", aliases="south,s"]
 }
