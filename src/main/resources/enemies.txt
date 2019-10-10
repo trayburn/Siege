@@ -1,1 +1,1 @@
-pond|The Lady of the Lake|2|5|10|lady
+pond|The Lady of the Lake|3|3|5|lady

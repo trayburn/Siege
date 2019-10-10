@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 @Configuration
 @ComponentScan("org.improving.siege")
-public class SpringContext {
+public class SpringContextConfiguration {
 
     @Bean
     public Scanner getScanner() { return new Scanner(System.in); }

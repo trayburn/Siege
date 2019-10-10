@@ -45,7 +45,7 @@ public class WorldFactory {
     private void loadLoots() {
         try {
             var lines = Files.readAllLines(Path.of(getResource("loots.txt")));
-            lines.stream().forEach(l -> {
+            lines.forEach(l -> {
                 var arr = l.split("\\|");
                 if (arr.length == 8) {
                     var locationId = arr[0];
@@ -73,7 +73,7 @@ public class WorldFactory {
     private void loadEnemies() {
         try {
             var lines = Files.readAllLines(Path.of(getResource("enemies.txt")));
-            lines.stream().forEach(l -> {
+            lines.forEach(l -> {
                 var arr = l.split("\\|");
                 if (arr.length == 6) {
                     var locationId = arr[0];
@@ -89,6 +89,7 @@ public class WorldFactory {
                         e.printStackTrace();
                     }
                     var enemy = new Enemy(name,str,dex,con);
+                    assert location != null;
                     location.getItems().add(enemy);
                     master.getItems().add(enemy);
                 }
@@ -101,7 +102,7 @@ public class WorldFactory {
     private void loadItems() {
         try {
             var lines = Files.readAllLines(Path.of(getResource("items.txt")));
-            lines.stream().forEach(l -> {
+            lines.forEach(l -> {
                 var arr = l.split("\\|");
                 if (arr.length == 8) {
                     var locationId = arr[0];
@@ -166,6 +167,7 @@ public class WorldFactory {
 
     private String getResource(String resourceName) throws URISyntaxException {
         URL res = getClass().getClassLoader().getResource(resourceName);
+        assert res != null;
         File file = Paths.get(res.toURI()).toFile();
         return file.getAbsolutePath();
     }

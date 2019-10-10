@@ -61,7 +61,7 @@ public class AttackCommand extends AliasedCommand {
                 context.getPlayer().getLocation().getItems().remove(enemy);
                 if (enemy.getItems().size() > 0) {
                     io.displayAlert("You loot:");
-                    enemy.getItems().stream().forEach(e -> io.displayAlert(e.getName()));
+                    enemy.getItems().stream().forEach(e -> io.displayAlert(e.toString()));
                     player.getItems().addAll(enemy.getItems());
                 }
             }
