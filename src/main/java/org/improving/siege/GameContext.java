@@ -4,6 +4,7 @@ import org.improving.siege.domain.EquippableWorldItem;
 import org.improving.siege.domain.Location;
 import org.improving.siege.domain.Player;
 import org.improving.siege.exceptions.GameException;
+import org.improving.siege.exceptions.ItemNotFoundGameException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,6 +15,14 @@ public class GameContext {
     public GameContext(WorldFactory factory) {
         this.masterLocation = factory.buildMasterLocation();
         initPlayer();
+    }
+
+    public Location find(String name) {
+        try {
+            return masterLocation.find(Location.class, name);
+        } catch (ItemNotFoundGameException e) {
+            return null;
+        }
     }
 
     private Player initPlayer() {

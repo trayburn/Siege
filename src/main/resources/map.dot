@@ -5,6 +5,7 @@ digraph map {
     road [label="The King's Road", desc=""]
     nroad [label="Northern The King's Road"]
     sroad [label="Southern The King's Road"]
+    casino [label="The Fairy Casino"]
 
     forest -> pond [label="The path south", aliases="south,s"]
     pond -> forest [label="The path north", aliases="north,n"]
@@ -14,6 +15,9 @@ digraph map {
 
     forest -> road [label="The path east", aliases="east,e"]
     road -> forest [label="The path west", aliases="west,w"]
+
+    forest -> casino [label="The path west", aliases="west,w"]
+    casino -> forest [label="The path east", aliases="east,e"]
 
     road -> sroad [label="The path south", aliases="south,s"]
     sroad -> road [label="The path north", aliases="north,n"]

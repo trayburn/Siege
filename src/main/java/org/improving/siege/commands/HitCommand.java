@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Stream;
 
 @Component
-public class HitCommand extends AliasedCommand {
+public class HitCommand extends LocationCommand {
     private final BlackJackSimulator simulator;
     public HitCommand(BlackJackSimulator simulator, GameContext context, InputOutput io) {
-        super(context, io);
+        super(context, io, context.find("The Fairy Casino"));
         this.simulator = simulator;
     }
 

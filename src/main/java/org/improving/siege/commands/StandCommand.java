@@ -9,10 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Stream;
 
 @Component
-public class StandCommand extends AliasedCommand {
+public class StandCommand extends LocationCommand {
     private final BlackJackSimulator simulator;
+
     public StandCommand(GameContext context, InputOutput io, BlackJackSimulator simulator) {
-        super(context, io);
+        super(context, io, context.find("The Fairy Casino"));
         this.simulator = simulator;
     }
 

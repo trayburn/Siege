@@ -81,10 +81,10 @@ public class BlackJackSimulator {
             for (var card : dealerHand) {
                 io.displayText("  " + card.toString());
             }
-            if (myCount < dealerCount || myCount > 21) {
+            if ((myCount < dealerCount && dealerCount <= 21) || myCount > 21) {
                 lose += 1;
                 io.displayAlert("You Lose!");
-            } else if (myCount > dealerCount || dealerCount > 21) {
+            } else if ((myCount > dealerCount && myCount <= 21) || dealerCount > 21) {
                 win += 1;
                 io.displayAlert("You Win!");
             } else {
